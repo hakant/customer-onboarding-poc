@@ -16,7 +16,6 @@
             "polyfills": "apps/onboarding/src/polyfills.ts",
             "tsConfig": "apps/onboarding/tsconfig.app.json",
             "assets": [
-              "apps/onboarding/src/favicon.ico",
               "apps/onboarding/src/assets"
             ],
             "styles": [],
