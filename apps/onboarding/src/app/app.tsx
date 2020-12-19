@@ -7,13 +7,10 @@ const StyledApp = styled.div`
   min-width: 300px;
   margin: 50px auto;
 
-  .flex {
+  header {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  header {
     background-color: #143055;
     color: white;
     padding: 5px;
@@ -21,12 +18,31 @@ const StyledApp = styled.div`
   }
 
   main {
+    display: flex;
+    justify-content: center;
     padding: 36px 36px;
+    form {
+      width: 500px;
+      max-width: 600px;
+    }
+    .row {
+      padding: 10px;
+    }
     label {
-      margin-right: 36px;
+      margin-right: 25px;
     }
     input {
-      width: 50%;
+      min-width: 100%;
+      text-align: center;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 1px 3px #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
   }
 `;
@@ -53,12 +69,12 @@ export function App() {
   return (
     <StyledApp>
       <header className="flex">
-        <h1>Welcome to Customer Onboarding POC!</h1>
+        <h1>Welcome to Customer Onboarding POC</h1>
       </header>
       <main>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="sessionId">SessionId</label>
+          <div className="row">
+            <label htmlFor="sessionId">SessionId:</label>
             <input
               id="sessionId"
               type="text"
@@ -66,7 +82,7 @@ export function App() {
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="row">
             <input
               type="submit"
               className="btn btn-primary"
