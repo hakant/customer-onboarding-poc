@@ -1,26 +1,9 @@
 import React, { useState } from "react";
 
 import styled from '@emotion/styled';
+import { useNavigate } from "react-router-dom";
 
 const StyledApp = styled.div`
-  font-family: sans-serif;
-  min-width: 300px;
-  margin: 50px auto;
-
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #143055;
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-  }
-
-  main {
-    display: flex;
-    justify-content: center;
-    padding: 36px 36px;
     form {
       width: 500px;
       max-width: 600px;
@@ -30,6 +13,11 @@ const StyledApp = styled.div`
     }
     label {
       margin-right: 25px;
+    }
+    button {
+      min-width: 100%;
+      padding: 10px 50px;
+      text-align: center;
     }
     input {
       min-width: 100%;
@@ -44,11 +32,11 @@ const StyledApp = styled.div`
       padding-top: 12px;
       padding-bottom: 12px;
     }
-  }
 `;
 
 export function Welcome() {
   const [sessionId, setSessionId] = useState(uuidv4());
+  const navigate = useNavigate();
 
   function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -68,29 +56,22 @@ export function Welcome() {
 
   return (
     <StyledApp>
-      <header className="flex">
-        <h1>Customer Onboarding POC</h1>
-      </header>
-      <main>
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <label htmlFor="sessionId">SessionId:</label>
-            <input
-              id="sessionId"
-              type="text"
-              value={sessionId}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="row">
-            <input
-              type="submit"
-              className="btn btn-primary"
-              value="Start Onboarding"
-            />
-          </div>
-        </form>
-      </main>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <label htmlFor="sessionId">SessionId:</label>
+          <input
+            id="sessionId"
+            type="text"
+            value={sessionId}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="row">
+          <button onClick={() => { navigate('/questionnaire/question/1'); }}>
+            Start Onboarding
+          </button>
+        </div>
+      </form>
     </StyledApp>
   );
 }
