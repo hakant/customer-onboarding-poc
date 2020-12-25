@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useQuestionnaireState } from "./questionnnaire-context";
 
 export default function QuestionnaireContainer() {
+    const previousQuestionId = useRef(undefined); 
     const navigate = useNavigate();
     const { questionnaireState, dispatch } = useQuestionnaireState();
     useEffect(() => {
-        if (questionnaireState.currentQuestionId) {
+        if (previousQuestionId.current && questionnaireState.currentQuestionId) {
             navigate("question/" + questionnaireState.currentQuestionId);
         }
+        previousQuestionId.current = questionnaireState.currentQuestionId;
     }, [questionnaireState.currentQuestionId]);
     return (
         <>
