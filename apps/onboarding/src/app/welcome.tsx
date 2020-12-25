@@ -69,7 +69,7 @@ export function Welcome() {
   return (
     <StyledApp>
       <header className="flex">
-        <h1>Welcome to Customer Onboarding POC</h1>
+        <h1>Customer Onboarding POC</h1>
       </header>
       <main>
         <form onSubmit={handleSubmit}>
