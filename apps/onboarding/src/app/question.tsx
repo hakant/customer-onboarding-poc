@@ -15,20 +15,33 @@ const StyledQuestion = styled.div`
     color: black;
     border: 2px solid black;
   }
+  div.option.selected {
+    background-color: #11C8CE;
+  }
 `;
 
 export default function Question() {
   const { id } = useParams();
   const { questionnaireState, dispatch } = useQuestionnaireState();
-  useEffect(() => {
-    dispatch({ type: "set-question-id", questionId: id });
-  }, [id]);
+  const { currentAnswerCode } = questionnaireState;
   const question = getQuestion(id);
+
+  console.log('Rendering Question');
+
+  useEffect(() => {
+    dispatch({ type: "set-current-question", questionId: id });
+  }, [id]);
+
   return (
     <StyledQuestion>
       <h1>{question.text}</h1>
       { question.options.map(o => (
-        <div className='option' key={o.code}>
+        <div
+          key={o.code}
+          className={`option ${o.code === currentAnswerCode ? "selected" : ''}`}
+          onClick={() => {
+            dispatch({ type: "set-current-answer", answerCode: o.code });
+          }}>
           {o.text}
         </div>
       ))}

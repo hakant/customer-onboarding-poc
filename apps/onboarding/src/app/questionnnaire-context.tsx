@@ -1,11 +1,12 @@
-import React, { useReducer, useEffect, useContext } from "react";
-import { questionnaireStateReducer } from "./services/questionnaire-service";
+import React, { useContext, useReducer } from "react";
+import { QuestionnaireState, questionnaireStateReducer } from "./services/questionnaire-service";
 
 export const QuestionnaireContext = React.createContext(null);
 
 export function QuestionnaireStateProvider(props) {
   const [questionnaireState, dispatch] = useReducer(questionnaireStateReducer, {
     currentQuestionId: undefined,
+    currentAnswerCode: undefined,
     answers: []
   });
 
@@ -21,7 +22,7 @@ export function QuestionnaireStateProvider(props) {
   );
 }
 
-export function useQuestionnaireState() {
+export function useQuestionnaireState(): { questionnaireState: QuestionnaireState, dispatch: any } {
   const context = useContext(QuestionnaireContext);
   if (!context) {
     throw new Error(
