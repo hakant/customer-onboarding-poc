@@ -67,7 +67,7 @@ export function Welcome() {
           />
         </div>
         <div className="row">
-          <button onClick={() => { navigate('/questionnaire/question/1'); }}>
+          <button onClick={() => { navigate(`/questionnaire/${sessionId}/question/1`); }}>
             Start Onboarding
           </button>
         </div>

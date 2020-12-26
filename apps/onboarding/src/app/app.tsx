@@ -54,7 +54,7 @@ export default function App() {
           children: []
         },
         {
-          path: 'questionnaire',
+          path: 'questionnaire/:id',
           element:
             <QuestionnaireStateProvider>
               <QuestionnaireContainer />
