@@ -1,14 +1,28 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import { QuestionnaireState, questionnaireStateReducer } from "./services/questionnaire-service";
 
 export const QuestionnaireContext = React.createContext(null);
 
+const defaultState = {
+  currentQuestionId: undefined,
+  currentAnswerCode: undefined,
+  answers: []
+};
+
+let initialState;
+try {
+  initialState = JSON.parse(localStorage.getItem("questionnaire-state")) ?? defaultState;
+} catch {
+  console.error("The questionnaire-state could not be parsed.");
+  initialState = defaultState;
+}
+
 export function QuestionnaireStateProvider(props) {
-  const [questionnaireState, dispatch] = useReducer(questionnaireStateReducer, {
-    currentQuestionId: undefined,
-    currentAnswerCode: undefined,
-    answers: []
-  });
+  const [questionnaireState, dispatch] = useReducer(questionnaireStateReducer, initialState);
+  useEffect(
+    () => localStorage.setItem("questionnaire-state", JSON.stringify(questionnaireState)),
+    [questionnaireState]
+  );
 
   const contextValue = {
     questionnaireState,
