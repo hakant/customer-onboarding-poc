@@ -6,6 +6,7 @@ export interface Answer {
     answerCode: string
 }
 export interface QuestionnaireState {
+    currentIntakeId: string,
     currentQuestionId: string,
     currentAnswerCode: string,
     answers: Answer[]
@@ -45,12 +46,6 @@ function mergeNewAnswer(answer: Answer, answers: Answer[]) {
 
 export function questionnaireStateReducer(state: QuestionnaireState, action): QuestionnaireState {
     switch (action.type) {
-        case "reset":
-            return {
-                currentQuestionId: getFirstQuestion().id,
-                currentAnswerCode: undefined,
-                answers: []
-            };
         case "set-current-question": {
             const { questionId } = action;
             const question = getQuestion(questionId) ?? getFirstQuestion();
