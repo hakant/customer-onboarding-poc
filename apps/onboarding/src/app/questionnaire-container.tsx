@@ -36,7 +36,7 @@ export default function QuestionnaireContainer() {
                 <button onClick={() => {
                     dispatch({ type: "previous-question" });
                 }}>Previous</button>
-                <button onClick={() => {
+                <button disabled={!questionnaireState.currentAnswerCode} onClick={() => {
                     dispatch({ type: "next-question" });
                 }}>Next</button>
             </StyledActions>
