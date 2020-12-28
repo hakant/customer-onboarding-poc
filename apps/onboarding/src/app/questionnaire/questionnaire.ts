@@ -54,8 +54,12 @@ const questionnaire: QuestionModel[] = [
                 "code": "60K-to-100K"
             },
             {
-                "text": "€ 20.000 to € 60.000",
-                "code": "20K-to-60K"
+                "text": "€ 37.000 to € 60.000",
+                "code": "37K-to-60K"
+            },
+            {
+                "text": "€ 20.000 to € 37.000",
+                "code": "20K-to-37K"
             },
             {
                 "text": "Lower than € 20.000",
