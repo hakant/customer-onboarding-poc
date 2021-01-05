@@ -1,14 +1,13 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
 import styled from '@emotion/styled';
 import { useNavigate } from "react-router-dom";
 
 const StyledApp = styled.div`
-    form {
+    .row {
       width: 500px;
       max-width: 600px;
-    }
-    .row {
       padding: 10px;
     }
     label {
@@ -35,43 +34,24 @@ const StyledApp = styled.div`
 `;
 
 export function Welcome() {
-  const [sessionId, setSessionId] = useState(uuidv4());
   const navigate = useNavigate();
-
-  function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
-
-  function handleChange(e) {
-    setSessionId(e.target.value);
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    console.log(sessionId);
-  }
 
   return (
     <StyledApp>
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <label htmlFor="sessionId">SessionId:</label>
-          <input
-            id="sessionId"
-            type="text"
-            value={sessionId}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="row">
-          <button onClick={() => { navigate(`/questionnaire/${sessionId}/question/1`); }}>
-            Start Onboarding
+      <div className="row">
+        <button onClick={() => {
+          axios.post('/intakes', {})
+            .then(function (response) {
+              const newIntakeId = response.data;
+              navigate(`/questionnaire/${newIntakeId}/question/1`);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }}>
+          Start Onboarding
           </button>
-        </div>
-      </form>
+      </div>
     </StyledApp>
   );
 }
