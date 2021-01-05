@@ -5,7 +5,7 @@ export type QuestionModel = {
     options: { text: string, code: string }[]
 }
 export interface Intake {
-    currentIntakeId: string,
+    intakeId: string,
     currentQuestionId: string,
     currentAnswerCode: string,
     answers: Answer[]
