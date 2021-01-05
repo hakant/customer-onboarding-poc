@@ -1,39 +1,46 @@
-import questionnaire, { QuestionModel } from '../questionnaire/questionnaire'
 
-const questionnaireSize = questionnaire.length;
-export interface Answer {
-    questionId: string,
-    answerCode: string
+export type QuestionModel = {
+    id: string;
+    text: string;
+    options: { text: string, code: string }[]
 }
-export interface QuestionnaireState {
+export interface Intake {
     currentIntakeId: string,
     currentQuestionId: string,
     currentAnswerCode: string,
     answers: Answer[]
 }
-
-export function getQuestion(id: string): QuestionModel | undefined {
-    return questionnaire.find(q => q.id === id);
+export interface Answer {
+    questionId: string,
+    answerCode: string
+}
+export interface QuestionnaireState {
+    intake: Intake,
+    questions: QuestionModel[]
 }
 
-function getFirstQuestion(): QuestionModel {
-    return questionnaire[0];
+export function getQuestion(id: string, questions: QuestionModel[]): QuestionModel | undefined {
+    return questions.find(q => q.id === id);
 }
 
-function getNextQuestion(currentQuestionId: string): QuestionModel {
-    const currentIndex = questionnaire.findIndex(q => q.id === currentQuestionId);
+function getFirstQuestion(questions: QuestionModel[]): QuestionModel {
+    return questions[0];
+}
+
+function getNextQuestion(currentQuestionId: string, questions: QuestionModel[]): QuestionModel {
+    const currentIndex = questions.findIndex(q => q.id === currentQuestionId);
     const nextIndex = currentIndex + 1;
-    return questionnaireSize > nextIndex ?
-        questionnaire[nextIndex] :
-        questionnaire[currentIndex];
+    return questions.length > nextIndex ?
+        questions[nextIndex] :
+        questions[currentIndex];
 }
 
-function getPreviousQuestion(currentQuestionId: string): QuestionModel {
-    const currentIndex = questionnaire.findIndex(q => q.id === currentQuestionId);
+function getPreviousQuestion(currentQuestionId: string, questions: QuestionModel[]): QuestionModel {
+    const currentIndex = questions.findIndex(q => q.id === currentQuestionId);
     const nextIndex = currentIndex - 1;
     return nextIndex > -1 ?
-        questionnaire[nextIndex] :
-        questionnaire[currentIndex];
+        questions[nextIndex] :
+        questions[currentIndex];
 }
 
 function mergeNewAnswer(answer: Answer, answers: Answer[]) {
@@ -46,46 +53,65 @@ function mergeNewAnswer(answer: Answer, answers: Answer[]) {
 
 export function questionnaireStateReducer(state: QuestionnaireState, action): QuestionnaireState {
     switch (action.type) {
+        case "initialize-state": {
+            const { intake, questions } = action;
+            return {
+                intake: intake,
+                questions: questions
+            };
+        }
         case "set-current-question": {
             const { questionId } = action;
-            const question = getQuestion(questionId) ?? getFirstQuestion();
-            const answerCode = state.answers.find(a => a.questionId === questionId)?.answerCode;
+            const question = getQuestion(questionId, state.questions) ?? getFirstQuestion(state.questions);
+            const answerCode = state.intake.answers.find(a => a.questionId === questionId)?.answerCode;
 
             return {
                 ...state,
-                currentQuestionId: question.id,
-                currentAnswerCode: answerCode,
-                answers: mergeNewAnswer({ questionId: question.id, answerCode }, state.answers)
+                intake: {
+                    ...state.intake,
+                    currentQuestionId: question.id,
+                    currentAnswerCode: answerCode,
+                    answers: mergeNewAnswer({ questionId: question.id, answerCode }, state.intake.answers)
+                }
             };
         }
         case "set-current-answer": {
             const { answerCode } = action;
             return {
                 ...state,
-                currentAnswerCode: answerCode
+                intake: {
+                    ...state.intake,
+                    currentAnswerCode: answerCode
+                }
             };
         }
         case "next-question": {
-            const { currentQuestionId, currentAnswerCode } = state;
+            const { currentQuestionId, currentAnswerCode } = state.intake;
             const newAnswers = mergeNewAnswer({
                 questionId: currentQuestionId,
                 answerCode: currentAnswerCode
-            }, state.answers);
+            }, state.intake.answers);
 
-            const nextQuestionId = getNextQuestion(state.currentQuestionId).id;
+            const nextQuestionId = getNextQuestion(state.intake.currentQuestionId, state.questions).id;
             return {
                 ...state,
-                answers: newAnswers,
-                currentQuestionId: nextQuestionId,
-                currentAnswerCode: newAnswers.find(a => a.questionId === nextQuestionId)?.answerCode
+                intake: {
+                    ...state.intake,
+                    answers: newAnswers,
+                    currentQuestionId: nextQuestionId,
+                    currentAnswerCode: newAnswers.find(a => a.questionId === nextQuestionId)?.answerCode
+                }
             };
         }
         case "previous-question": {
-            const previousQuestionId = getPreviousQuestion(state.currentQuestionId).id;
+            const previousQuestionId = getPreviousQuestion(state.intake.currentQuestionId, state.questions).id;
             return {
                 ...state,
-                currentQuestionId: previousQuestionId,
-                currentAnswerCode: state.answers.find(a => a.questionId === previousQuestionId)?.answerCode
+                intake: {
+                    ...state.intake,
+                    currentQuestionId: previousQuestionId,
+                    currentAnswerCode: state.intake.answers.find(a => a.questionId === previousQuestionId)?.answerCode
+                }
             }
         }
         default:

@@ -24,11 +24,11 @@ export default function QuestionnaireContainer() {
     const navigate = useNavigate();
     const { questionnaireState, dispatch } = useQuestionnaireState();
     useEffect(() => {
-        if (previousQuestionId.current && questionnaireState.currentQuestionId) {
-            navigate("question/" + questionnaireState.currentQuestionId);
+        if (previousQuestionId.current && questionnaireState.intake.currentQuestionId) {
+            navigate("question/" + questionnaireState.intake.currentQuestionId);
         }
-        previousQuestionId.current = questionnaireState.currentQuestionId;
-    }, [questionnaireState.currentQuestionId]);
+        previousQuestionId.current = questionnaireState.intake.currentQuestionId;
+    }, [questionnaireState.intake.currentQuestionId]);
     return (
         <StyledHost>
             <Outlet />
@@ -36,7 +36,7 @@ export default function QuestionnaireContainer() {
                 <button onClick={() => {
                     dispatch({ type: "previous-question" });
                 }}>Previous</button>
-                <button disabled={!questionnaireState.currentAnswerCode} onClick={() => {
+                <button disabled={!questionnaireState.intake.currentAnswerCode} onClick={() => {
                     dispatch({ type: "next-question" });
                 }}>Next</button>
             </StyledActions>

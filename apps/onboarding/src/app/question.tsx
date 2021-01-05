@@ -23,10 +23,9 @@ const StyledQuestion = styled.div`
 export default function Question() {
   const { id } = useParams();
   const { questionnaireState, dispatch } = useQuestionnaireState();
-  const { currentAnswerCode } = questionnaireState;
-  const question = getQuestion(id);
+  const { currentAnswerCode } = questionnaireState.intake;
+  const question = getQuestion(id, questionnaireState.questions);
 
-  console.log('Rendering Question');
 
   useEffect(() => {
     dispatch({ type: "set-current-question", questionId: id });

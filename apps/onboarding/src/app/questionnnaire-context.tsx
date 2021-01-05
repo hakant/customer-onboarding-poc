@@ -1,45 +1,56 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { QuestionnaireState, questionnaireStateReducer } from "./services/questionnaire-service";
+import axios from 'axios';
 
 export const QuestionnaireContext = React.createContext(null);
 
 function getInitialState(currentIntakeId: string): QuestionnaireState {
-  const defaultState: QuestionnaireState = {
-    currentIntakeId: currentIntakeId,
-    currentQuestionId: undefined,
-    currentAnswerCode: undefined,
-    answers: []
+  const initialState: QuestionnaireState = {
+    intake: {
+      currentIntakeId: currentIntakeId,
+      currentQuestionId: undefined,
+      currentAnswerCode: undefined,
+      answers: []
+    },
+    questions: []
   };
-
-  let initialState: QuestionnaireState;
-  try {
-    initialState = JSON.parse(localStorage.getItem("questionnaire-state")) ?? defaultState;
-  } catch {
-    console.error("The questionnaire-state could not be parsed.");
-    initialState = defaultState;
-  }
-
-  if (initialState.currentIntakeId !== currentIntakeId) {
-    initialState = defaultState;
-  }
-
   return initialState;
 }
 
 export function QuestionnaireStateProvider(props) {
   const { id } = useParams();
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [questionnaireState, dispatch] = useReducer(questionnaireStateReducer, getInitialState(id));
 
   useEffect(
-    () => localStorage.setItem("questionnaire-state", JSON.stringify(questionnaireState)),
-    [questionnaireState]
+    () => {
+      axios.get(`/intakes/${id}`)
+        .then(function (response) {
+          const {intake, questions} = response.data;
+          dispatch({ type: "initialize-state", intake, questions});
+          setIsLoaded(true);
+        })
+        .catch(function (error) {
+          setIsLoaded(true);
+          setError(error);
+        });
+    }, []
   );
 
   const contextValue = {
     questionnaireState,
     dispatch,
   };
+
+  if (!isLoaded) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <QuestionnaireContext.Provider value={contextValue} >
