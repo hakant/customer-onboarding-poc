@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import axios from "axios";
 import React, { useEffect, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useQuestionnaireState } from "./questionnnaire-context";
@@ -23,12 +24,13 @@ export default function QuestionnaireContainer() {
     const previousQuestionId = useRef(undefined);
     const navigate = useNavigate();
     const { questionnaireState, dispatch } = useQuestionnaireState();
+    const { intakeId, currentQuestionId, currentAnswerCode } = questionnaireState.intake;
     useEffect(() => {
-        if (previousQuestionId.current && questionnaireState.intake.currentQuestionId) {
-            navigate("question/" + questionnaireState.intake.currentQuestionId);
+        if (previousQuestionId.current && currentQuestionId) {
+            navigate("question/" + currentQuestionId);
         }
-        previousQuestionId.current = questionnaireState.intake.currentQuestionId;
-    }, [questionnaireState.intake.currentQuestionId]);
+        previousQuestionId.current = currentQuestionId;
+    }, [currentQuestionId]);
     return (
         <StyledHost>
             <Outlet />
@@ -36,8 +38,17 @@ export default function QuestionnaireContainer() {
                 <button onClick={() => {
                     dispatch({ type: "previous-question" });
                 }}>Previous</button>
-                <button disabled={!questionnaireState.intake.currentAnswerCode} onClick={() => {
-                    dispatch({ type: "next-question" });
+                <button disabled={!currentAnswerCode} onClick={() => {
+                    axios.put(`/intakes/${intakeId}`, {
+                        questionId: currentQuestionId,
+                        answer: currentAnswerCode
+                    })
+                        .then(function () {
+                            dispatch({ type: "next-question" });
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 }}>Next</button>
             </StyledActions>
         </StyledHost>
