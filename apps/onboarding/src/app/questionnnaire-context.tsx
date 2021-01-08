@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { QuestionnaireState, questionnaireStateReducer } from "./services/questionnaire-service";
-import axios from 'axios';
 
 export const QuestionnaireContext = React.createContext(null);
 
@@ -33,8 +33,8 @@ export function QuestionnaireStateProvider(props) {
           setIsLoaded(true);
         })
         .catch(function (error) {
-          setIsLoaded(true);
           setError(error);
+          setIsLoaded(true);
         });
     }, []
   );
