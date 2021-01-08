@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import axios from "axios";
 import React, { useEffect, useRef } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuestionnaireState } from "./questionnnaire-context";
 
 const StyledHost = styled.div`
@@ -21,11 +21,17 @@ const StyledActions = styled.section`
 `;
 
 export default function QuestionnaireContainer() {
+    const location = useLocation();
     const previousQuestionId = useRef(undefined);
+    const { id } = useParams();
     const navigate = useNavigate();
     const { questionnaireState, dispatch } = useQuestionnaireState();
     const { intakeId, currentQuestionId, currentAnswerCode } = questionnaireState.intake;
     useEffect(() => {
+        if (location.pathname.indexOf('/question/') < 0) {
+            // if question is not specified, route to the current question that we know
+            navigate("question/" + currentQuestionId);
+        }
         if (previousQuestionId.current && currentQuestionId) {
             navigate("question/" + currentQuestionId);
         }
