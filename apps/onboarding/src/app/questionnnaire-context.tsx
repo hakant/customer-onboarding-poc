@@ -8,7 +8,7 @@ export const QuestionnaireContext = React.createContext(null);
 function getInitialState(currentIntakeId: string): QuestionnaireState {
   const initialState: QuestionnaireState = {
     intake: {
-      currentIntakeId: currentIntakeId,
+      intakeId: currentIntakeId,
       currentQuestionId: undefined,
       currentAnswerCode: undefined,
       answers: []
