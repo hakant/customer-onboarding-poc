@@ -1,11 +1,12 @@
+import styled from '@emotion/styled';
 import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
+import OpenAccountDashboard from "./open-account-dashboard";
 import Question from "./question";
 import QuestionnaireContainer from "./questionnaire-container";
 import { QuestionnaireStateProvider } from "./questionnnaire-context";
 import Welcome from "./welcome";
 
-import styled from '@emotion/styled';
 
 const StyledHost = styled.div`
   font-family: sans-serif;
@@ -62,6 +63,10 @@ export default function App() {
           children: [
             { path: 'question/:id', element: <Question /> },
           ]
+        },
+        {
+          path: 'open-account-dashboard/:id',
+          element: <OpenAccountDashboard />
         }
       ]
     }

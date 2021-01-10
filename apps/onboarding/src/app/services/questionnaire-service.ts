@@ -27,12 +27,12 @@ function getFirstQuestion(questions: QuestionModel[]): QuestionModel {
     return questions[0];
 }
 
-function getNextQuestion(currentQuestionId: string, questions: QuestionModel[]): QuestionModel {
+function getNextQuestion(currentQuestionId: string, questions: QuestionModel[]): QuestionModel | null {
     const currentIndex = questions.findIndex(q => q.id === currentQuestionId);
     const nextIndex = currentIndex + 1;
     return questions.length > nextIndex ?
         questions[nextIndex] :
-        questions[currentIndex];
+        null;
 }
 
 function getPreviousQuestion(currentQuestionId: string, questions: QuestionModel[]): QuestionModel {
@@ -92,7 +92,10 @@ export function questionnaireStateReducer(state: QuestionnaireState, action): Qu
                 answerCode: currentAnswerCode
             }, state.intake.answers);
 
-            const nextQuestionId = getNextQuestion(state.intake.currentQuestionId, state.questions).id;
+            let nextQuestionId = getNextQuestion(state.intake.currentQuestionId, state.questions)?.id;
+            if (!nextQuestionId) {
+                nextQuestionId = "end";
+            }
             return {
                 ...state,
                 intake: {
