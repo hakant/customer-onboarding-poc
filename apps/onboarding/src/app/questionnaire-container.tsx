@@ -31,7 +31,7 @@ export default function QuestionnaireContainer() {
     const question = getQuestion(currentQuestionId, questionnaireState.questions);
     useEffect(() => {
         if (currentQuestionId === 'end') {
-            navigate(`/open-account-dashboard/${intakeId}`);
+            navigate(`load-onboarding`);
             return;
         }
         if (location.pathname.indexOf('/question/') < 0) {

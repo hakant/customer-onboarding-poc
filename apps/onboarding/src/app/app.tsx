@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
-import OpenAccountDashboard from "./open-account-dashboard";
+import { LoadOnboarding } from './load-onboarding';
+import { OnboardingStateProvider } from './onboarding-context';
+import OnboardingDashboard from "./onboarding-dashboard";
 import Question from "./question";
 import QuestionnaireContainer from "./questionnaire-container";
 import { QuestionnaireStateProvider } from "./questionnnaire-context";
@@ -62,11 +64,18 @@ export default function App() {
             </QuestionnaireStateProvider>,
           children: [
             { path: 'question/:id', element: <Question /> },
+            { path: 'load-onboarding', element: <LoadOnboarding />}
           ]
         },
         {
-          path: 'open-account-dashboard/:id',
-          element: <OpenAccountDashboard />
+          path: 'onboarding/:id',
+          element:
+            <OnboardingStateProvider>
+              <Outlet />
+            </OnboardingStateProvider>,
+          children: [
+            { path: '', element: <OnboardingDashboard /> },
+          ]
         }
       ]
     }
