@@ -24,20 +24,11 @@ enum IdCheckStatus {
   IdCheckSuccessful
 }
 
-function getInitialState(currentIntakeId: string): OnboardingState {
-  const initialState: OnboardingState = {
-    onboardingId: null,
-    intakeId: currentIntakeId,
-    idCheckWorkflows: []
-  };
-  return initialState;
-}
-
 export function OnboardingStateProvider(props) {
   const { id } = useParams();
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [onboardingState, setOnboardingState] = useState(getInitialState(id));
+  const [onboardingState, setOnboardingState] = useState(null);
 
   useEffect(
     () => {
