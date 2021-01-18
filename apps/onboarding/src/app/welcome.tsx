@@ -33,7 +33,7 @@ const StyledApp = styled.div`
     }
 `;
 
-export function Welcome() {
+export default function Welcome() {
   const navigate = useNavigate();
 
   return (
@@ -55,5 +55,3 @@ export function Welcome() {
     </StyledApp>
   );
 }
-
-export default Welcome;
