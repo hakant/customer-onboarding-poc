@@ -11,17 +11,17 @@ export interface OnboardingState {
 }
 
 export interface IdCheckWorkflow {
-  id: string,
+  idCheckWorkflowId: string,
   status: IdCheckStatus
 }
 
-enum IdCheckStatus {
-  Initial,
-  PhotosUploaded,
-  IdCheckStarted,
-  IdCheckTimedOut,
-  IdCheckFailed,
-  IdCheckSuccessful
+export enum IdCheckStatus {
+  Initial = "Initial",
+  PhotosUploaded = "PhotosUploaded",
+  IdCheckStarted = "IdCheckStarted",
+  IdCheckTimedOut = "IdCheckTimedOut",
+  IdCheckFailed = "IdCheckFailed",
+  IdCheckSuccessful = "IdCheckSuccessful"
 }
 
 export function OnboardingStateProvider(props) {
@@ -30,11 +30,13 @@ export function OnboardingStateProvider(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [onboardingState, setOnboardingState] = useState(null);
 
+  type OnboardingStateResponse = { data: { onboardingWorkflow: OnboardingState } };
+
   useEffect(
     () => {
-      axios.get<any, { data: OnboardingState }>(`/onboarding/${id}`)
+      axios.get<any, OnboardingStateResponse>(`/onboarding/${id}`)
         .then((response) => {
-          setOnboardingState(response.data);
+          setOnboardingState(response.data.onboardingWorkflow);
           setIsLoaded(true);
         })
         .catch((error) => {
@@ -52,8 +54,12 @@ export function OnboardingStateProvider(props) {
     return <div>Error: {error.message}</div>
   }
 
+  const contextValue = {
+    onboardingState,
+  };
+
   return (
-    <OnboardingContext.Provider value={onboardingState} >
+    <OnboardingContext.Provider value={contextValue} >
       { props.children}
     </OnboardingContext.Provider>
   );
