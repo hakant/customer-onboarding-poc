@@ -5,7 +5,7 @@ import { IdCheckStatus, useOnboardingState } from "./onboarding-context";
 const TodoBox = styled.div`
     height: 54px;
     padding: 8px 18px;
-    margin-bottom: 10px;
+    margin: 30px 0;
     display: flex;
     align-items: center;
     justify-content: flex-start;
