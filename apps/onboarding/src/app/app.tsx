@@ -7,6 +7,7 @@ import OnboardingDashboard from "./onboarding-dashboard";
 import Question from "./question";
 import QuestionnaireContainer from "./questionnaire-container";
 import { QuestionnaireStateProvider } from "./questionnnaire-context";
+import StartIdCheck from './start-id-check';
 import Welcome from "./welcome";
 
 
@@ -75,6 +76,7 @@ export default function App() {
             </OnboardingStateProvider>,
           children: [
             { path: '', element: <OnboardingDashboard /> },
+            { path: 'start-id-check/:id', element: <StartIdCheck /> },
           ]
         }
       ]

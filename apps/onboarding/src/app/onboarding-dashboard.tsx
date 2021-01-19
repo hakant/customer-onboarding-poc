@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { IdCheckStatus, useOnboardingState } from "./onboarding-context";
 
 const TodoBox = styled.div`
@@ -57,12 +58,15 @@ const TodoBox = styled.div`
 
 export default function OnboardingDashboard() {
     const { onboardingState } = useOnboardingState();
+    const navigate = useNavigate();
     return (
         <div className='dashboard'>
             <p>Please complete the following tasks to open your account:</p>
             {
                 onboardingState.idCheckWorkflows.map((w, i) => (
-                    <TodoBox key={w.idCheckWorkflowId}>
+                    <TodoBox key={w.idCheckWorkflowId} onClick={() => {
+                        navigate(`start-id-check/${w.idCheckWorkflowId}`);
+                    }}>
                         <span className="label">
                             {i === 0 ? "Your Id Check: " : "Your Partner's Id Check: "}
                         </span>
