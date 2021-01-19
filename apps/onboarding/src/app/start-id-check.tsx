@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import QRCode from "qrcode.react";
 import styled from "@emotion/styled";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -43,9 +44,7 @@ export default function StartIdCheck() {
 
     if (displayLink) {
         return (
-            <a href="`http://localhost:4001/id-check/${id}`">
-                {`http://localhost:4001/id-check/${id}`}
-            </a>
+            <QRCode value={`http://localhost:4001/id-check/${id}`} />
         )
     }
 
