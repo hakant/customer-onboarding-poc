@@ -15,9 +15,7 @@
             "main": "apps/onboarding/src/main.tsx",
             "polyfills": "apps/onboarding/src/polyfills.ts",
             "tsConfig": "apps/onboarding/tsconfig.app.json",
-            "assets": [
-              "apps/onboarding/src/assets"
-            ],
+            "assets": ["apps/onboarding/src/assets"],
             "styles": [],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
@@ -46,9 +44,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/web:dev-server",
@@ -64,9 +60,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/onboarding/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/onboarding/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
@@ -75,9 +69,7 @@
             "jestConfig": "apps/onboarding/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/apps/onboarding"
-          ]
+          "outputs": ["coverage/apps/onboarding"]
         }
       }
     },
@@ -102,9 +94,124 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/onboarding-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/onboarding-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "idcheck": {
+      "projectType": "application",
+      "root": "apps/idcheck",
+      "sourceRoot": "apps/idcheck/src",
+      "prefix": "customer-onboarding",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/idcheck",
+            "index": "apps/idcheck/src/index.html",
+            "main": "apps/idcheck/src/main.ts",
+            "polyfills": "apps/idcheck/src/polyfills.ts",
+            "tsConfig": "apps/idcheck/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/idcheck/src/favicon.ico",
+              "apps/idcheck/src/assets"
+            ],
+            "styles": ["apps/idcheck/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/idcheck/src/environments/environment.ts",
+                  "with": "apps/idcheck/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "idcheck:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "idcheck:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "idcheck:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/idcheck/tsconfig.app.json",
+              "apps/idcheck/tsconfig.spec.json",
+              "apps/idcheck/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/idcheck/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/idcheck"],
+          "options": {
+            "jestConfig": "apps/idcheck/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "idcheck-e2e": {
+      "root": "apps/idcheck-e2e",
+      "sourceRoot": "apps/idcheck-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/idcheck-e2e/cypress.json",
+            "tsConfig": "apps/idcheck-e2e/tsconfig.e2e.json",
+            "devServerTarget": "idcheck:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "idcheck:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/idcheck-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/idcheck-e2e/**/*"]
           }
         }
       }
@@ -127,6 +234,16 @@
         "style": "@emotion/styled",
         "linter": "eslint"
       }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
   },
   "defaultProject": "onboarding"

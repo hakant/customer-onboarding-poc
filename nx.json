@@ -29,6 +29,13 @@
     "onboarding-e2e": {
       "tags": [],
       "implicitDependencies": ["onboarding"]
+    },
+    "idcheck": {
+      "tags": []
+    },
+    "idcheck-e2e": {
+      "tags": [],
+      "implicitDependencies": ["idcheck"]
     }
   }
 }
