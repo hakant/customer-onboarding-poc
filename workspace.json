@@ -45,7 +45,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/web:dev-server",
@@ -61,7 +64,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/onboarding/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/onboarding/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
@@ -69,7 +74,10 @@
           "options": {
             "jestConfig": "apps/onboarding/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/onboarding"
+          ]
         }
       }
     },
@@ -94,7 +102,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/onboarding-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/onboarding-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
