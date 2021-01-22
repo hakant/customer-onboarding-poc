@@ -44,7 +44,7 @@ export default function StartIdCheck() {
 
     if (displayLink) {
         return (
-            <QRCode value={`http://localhost:4001/id-check/${id}`} />
+            <QRCode value={`http://localhost:4201/id-check/${id}`} />
         )
     }
 
@@ -74,7 +74,7 @@ export default function StartIdCheck() {
                 }}>Previous</button>
                 <button disabled={!answer} onClick={() => {
                     if (answer === "stay") {
-                        window.location.assign(`http://localhost:4001/id-check/${id}`);
+                        window.location.assign(`http://localhost:4201/id-check/${id}`);
                     } else {
                         setDisplayLink(true);
                     }

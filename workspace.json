@@ -218,7 +218,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/react"
+    // "defaultCollection": "@nrwl/react"
   },
   "schematics": {
     "@nrwl/react": {
