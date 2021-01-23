@@ -1,16 +1,1 @@
-<div class="id-check-container">
-  <header className="flex">
-    <h1>Id Check POC</h1>
-  </header>
-  <main>
-    <section class="actions">
-      <div class="question">
-        <h1>Select the state of the Id Check</h1>
-        <div class="option" *ngFor="let event of Object.keys(IdCheckEvent)"
-          [class.selected]="currentEvent === IdCheckEvent[event]" (click)="handleIdCheckEvent(IdCheckEvent[event])">
-          {{ event }}
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
+<router-outlet></router-outlet>
