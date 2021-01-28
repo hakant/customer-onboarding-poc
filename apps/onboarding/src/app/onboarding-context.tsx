@@ -1,28 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { OnboardingState } from '@customer-onboarding/data';
 
 export const OnboardingContext = React.createContext(null);
-
-export interface OnboardingState {
-  onboardingId: string,
-  intakeId: string,
-  idCheckWorkflows: IdCheckWorkflow[]
-}
-
-export interface IdCheckWorkflow {
-  idCheckWorkflowId: string,
-  status: IdCheckStatus
-}
-
-export enum IdCheckStatus {
-  Initial = "Initial",
-  PhotosUploaded = "PhotosUploaded",
-  IdCheckStarted = "IdCheckStarted",
-  IdCheckTimedOut = "IdCheckTimedOut",
-  IdCheckFailed = "IdCheckFailed",
-  IdCheckSuccessful = "IdCheckSuccessful"
-}
 
 export function OnboardingStateProvider(props) {
   const { id } = useParams();

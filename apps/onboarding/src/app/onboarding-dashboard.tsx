@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IdCheckStatus, useOnboardingState } from "./onboarding-context";
+import { useOnboardingState } from "./onboarding-context";
+import { IdCheckStatus } from '@customer-onboarding/data';
 
 const TodoBox = styled.div`
     height: 54px;
@@ -23,7 +24,7 @@ const TodoBox = styled.div`
         display: inline-block;
         margin-left: 20px;
         width: 120px;
-        padding: .25em .4em;
+        padding: .25em 2em;
         font-size: 75%;
         font-weight: 700;
         line-height: 1;
@@ -65,7 +66,7 @@ export default function OnboardingDashboard() {
             {
                 onboardingState.idCheckWorkflows.map((w, i) => (
                     <TodoBox key={w.idCheckWorkflowId} onClick={() => {
-                        navigate(`start-id-check/${w.idCheckWorkflowId}`);
+                        navigate(`start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}`);
                     }}>
                         <span className="label">
                             {i === 0 ? "Your Id Check: " : "Your Partner's Id Check: "}

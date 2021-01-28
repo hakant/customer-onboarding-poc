@@ -1,3 +1,7 @@
 module.exports = {
-  projects: ['<rootDir>/apps/onboarding', '<rootDir>/apps/idcheck'],
+  projects: [
+    '<rootDir>/apps/onboarding',
+    '<rootDir>/apps/idcheck',
+    '<rootDir>/libs/data',
+  ],
 };

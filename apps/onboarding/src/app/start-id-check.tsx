@@ -37,14 +37,14 @@ const StyledActions = styled.section`
 `;
 
 export default function StartIdCheck() {
-    const { id } = useParams();
+    const { onboardingId, idCheckId } = useParams();
     const [answer, setAnswer] = useState<string>();
     const [displayLink, setDisplayLink] = useState(false);
     const navigate = useNavigate();
 
     if (displayLink) {
         return (
-            <QRCode value={`http://localhost:4201/id-check/${id}`} />
+            <QRCode value={`http://localhost:4201/id-check/${onboardingId}/${idCheckId}`} />
         )
     }
 
@@ -70,11 +70,11 @@ export default function StartIdCheck() {
             </StyledQuestion>
             <StyledActions>
                 <button onClick={() => {
-                    navigate("../../");
+                    navigate("../../../");
                 }}>Previous</button>
                 <button disabled={!answer} onClick={() => {
                     if (answer === "stay") {
-                        window.location.assign(`http://localhost:4201/id-check/${id}`);
+                        window.location.assign(`http://localhost:4201/id-check/${onboardingId}/${idCheckId}`);
                     } else {
                         setDisplayLink(true);
                     }

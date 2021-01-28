@@ -76,7 +76,7 @@ export default function App() {
             </OnboardingStateProvider>,
           children: [
             { path: '', element: <OnboardingDashboard /> },
-            { path: 'start-id-check/:id', element: <StartIdCheck /> },
+            { path: 'start-id-check/:onboardingId/:idCheckId', element: <StartIdCheck /> },
           ]
         }
       ]

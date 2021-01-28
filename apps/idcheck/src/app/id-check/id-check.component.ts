@@ -1,28 +1,47 @@
-import { Component } from '@angular/core';
-
-export enum IdCheckEvent {
-  Initial = 'Initial',
-  PhotosUploaded = 'PhotosUploaded',
-  IdCheckStarted = 'IdCheckStarted',
-  IdCheckTimedOut = 'IdCheckTimedOut',
-  IdCheckFailed = 'IdCheckFailed',
-  IdCheckSuccessful = 'IdCheckSuccessful'
-}
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IdCheckStatus, OnboardingState } from '@customer-onboarding/data';
 
 @Component({
   selector: 'customer-onboarding-id-check',
   templateUrl: './id-check.component.html',
   styleUrls: ['./id-check.component.scss']
 })
-export class IdCheckComponent {
-
-  IdCheckEvent = IdCheckEvent;
+export class IdCheckComponent implements OnInit {
+  IdCheckStatus = IdCheckStatus;
   Object = Object;
 
   title = 'idcheck';
-  currentEvent = IdCheckEvent.Initial;
+  currentEvent = IdCheckStatus.Initial;
 
-  handleIdCheckEvent(event: IdCheckEvent) {
-    this.currentEvent = event;
+  onboardingId: string;
+  idCheckId: string;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private httpClient: HttpClient
+  ) {
+    this.onboardingId = this.activatedRoute.snapshot.paramMap.get('onboardingId');
+    this.idCheckId = this.activatedRoute.snapshot.paramMap.get('idCheckId');
+  }
+
+  ngOnInit(): void {
+
+    this.httpClient.get(`https://localhost:5001/onboarding/${this.onboardingId}`)
+      .subscribe((response: { onboardingWorkflow: OnboardingState }) => {
+        this.currentEvent = response.onboardingWorkflow.idCheckWorkflows.find(
+          i => i.idCheckWorkflowId === this.idCheckId
+        )?.status ?? IdCheckStatus.Initial;
+      });
+  }
+
+  handleIdCheckEvent(event: IdCheckStatus) {
+    this.httpClient.put(`https://localhost:5001/onboarding/${this.onboardingId}/${this.idCheckId}`,
+      {
+        status: event
+      }).subscribe(() => {
+        this.currentEvent = event;
+      });
   }
 }

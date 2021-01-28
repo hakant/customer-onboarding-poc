@@ -6,8 +6,8 @@
       <section class="actions">
         <div class="question">
           <h1>Select the state of the Id Check</h1>
-          <div class="option" *ngFor="let event of Object.keys(IdCheckEvent)"
-            [class.selected]="currentEvent === IdCheckEvent[event]" (click)="handleIdCheckEvent(IdCheckEvent[event])">
+          <div class="option" *ngFor="let event of Object.keys(IdCheckStatus)"
+            [class.selected]="currentEvent === IdCheckStatus[event]" (click)="handleIdCheckEvent(IdCheckStatus[event])">
             {{ event }}
           </div>
         </div>
