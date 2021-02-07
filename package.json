@@ -38,6 +38,7 @@
     "@angular/router": "^11.0.0",
     "@emotion/react": "11.0.0",
     "@emotion/styled": "11.0.0",
+    "@microsoft/signalr": "^5.0.2",
     "axios": "^0.21.1",
     "document-register-element": "1.13.1",
     "history": "^5.0.0",
