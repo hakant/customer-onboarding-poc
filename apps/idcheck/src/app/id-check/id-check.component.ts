@@ -17,6 +17,7 @@ export class IdCheckComponent implements OnInit {
 
   onboardingId: string;
   idCheckId: string;
+  idCheckIndex: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,6 +25,7 @@ export class IdCheckComponent implements OnInit {
   ) {
     this.onboardingId = this.activatedRoute.snapshot.paramMap.get('onboardingId');
     this.idCheckId = this.activatedRoute.snapshot.paramMap.get('idCheckId');
+    this.idCheckIndex = this.activatedRoute.snapshot.paramMap.get('idCheckIndex');
   }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class IdCheckComponent implements OnInit {
   }
 
   handleIdCheckEvent(event: IdCheckStatus) {
-    this.httpClient.put(`https://localhost:5001/onboarding/${this.onboardingId}/${this.idCheckId}`,
+    this.httpClient.put(`https://localhost:5001/onboarding/${this.onboardingId}/${this.idCheckId}/${this.idCheckIndex}`,
       {
         status: event
       }).subscribe(() => {

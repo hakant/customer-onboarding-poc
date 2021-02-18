@@ -36,7 +36,7 @@ export function QuestionnaireStateProvider(props) {
           setError(error);
           setIsLoaded(true);
         });
-    }, []
+    }, [id]
   );
 
   const contextValue = {
@@ -59,7 +59,7 @@ export function QuestionnaireStateProvider(props) {
   );
 }
 
-export function useQuestionnaireState(): { questionnaireState: QuestionnaireState, dispatch: any } {
+export function useQuestionnaireState(): { questionnaireState: QuestionnaireState, dispatch: React.Dispatch<unknown> } {
   const context = useContext(QuestionnaireContext);
   if (!context) {
     throw new Error(

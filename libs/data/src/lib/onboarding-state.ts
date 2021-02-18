@@ -6,7 +6,8 @@ export interface OnboardingState {
 
 export interface IdCheckWorkflow {
     idCheckWorkflowId: string,
-    status: IdCheckStatus
+    status: IdCheckStatus,
+    idCheckIndex: number
 }
 
 export enum IdCheckStatus {

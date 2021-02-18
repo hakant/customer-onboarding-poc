@@ -13,7 +13,7 @@ import { IdCheckComponent } from './id-check/id-check.component';
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: 'id-check/:onboardingId/:idCheckId',
+        path: 'id-check/:onboardingId/:idCheckId/:idCheckIndex',
         component: IdCheckComponent
       }
     ], { initialNavigation: 'enabled' }),

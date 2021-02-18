@@ -42,7 +42,7 @@ export default function QuestionnaireContainer() {
             navigate(`question/${currentQuestionId}`);
         }
         previousQuestionId.current = currentQuestionId;
-    }, [currentQuestionId]);
+    }, [currentQuestionId, location.pathname, navigate]);
     return (
         <StyledHost>
             <Outlet />

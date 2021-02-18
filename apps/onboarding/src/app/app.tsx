@@ -47,7 +47,7 @@ export function Host() {
 }
 
 export default function App() {
-  let element = useRoutes([
+  const element = useRoutes([
     {
       path: '/',
       element: <Host />,
@@ -76,7 +76,7 @@ export default function App() {
             </OnboardingStateProvider>,
           children: [
             { path: '', element: <OnboardingDashboard /> },
-            { path: 'start-id-check/:onboardingId/:idCheckId', element: <StartIdCheck /> },
+            { path: 'start-id-check/:onboardingId/:idCheckId/:idCheckIndex', element: <StartIdCheck /> },
           ]
         }
       ]

@@ -29,7 +29,7 @@ export default function Question() {
 
   useEffect(() => {
     dispatch({ type: "set-current-question", questionId: id });
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <StyledQuestion>

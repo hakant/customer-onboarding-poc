@@ -1,21 +1,21 @@
+import { OnboardingState } from '@customer-onboarding/data';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { OnboardingState } from '@customer-onboarding/data';
 
 export const OnboardingContext = React.createContext(null);
 
 export function OnboardingStateProvider(props) {
   const { id } = useParams();
   const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [onboardingState, setOnboardingState] = useState(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [onboardingState, setOnboardingState] = useState<OnboardingState>(null);
 
   type OnboardingStateResponse = { data: { onboardingWorkflow: OnboardingState } };
 
   useEffect(
     () => {
-      axios.get<any, OnboardingStateResponse>(`/onboarding/${id}`)
+      axios.get<unknown, OnboardingStateResponse>(`/onboarding/${id}`)
         .then((response) => {
           setOnboardingState(response.data.onboardingWorkflow);
           setIsLoaded(true);
@@ -24,7 +24,7 @@ export function OnboardingStateProvider(props) {
           setError(error);
           setIsLoaded(true);
         });
-    }, []
+    }, [id]
   );
 
   if (!isLoaded) {
@@ -37,6 +37,7 @@ export function OnboardingStateProvider(props) {
 
   const contextValue = {
     onboardingState,
+    setOnboardingState
   };
 
   return (
@@ -46,7 +47,10 @@ export function OnboardingStateProvider(props) {
   );
 }
 
-export function useOnboardingState(): { onboardingState: OnboardingState } {
+export function useOnboardingState(): {
+  onboardingState: OnboardingState,
+  setOnboardingState: React.Dispatch<React.SetStateAction<OnboardingState>>
+} {
   const context = useContext(OnboardingContext);
   if (!context) {
     throw new Error(

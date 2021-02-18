@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOnboardingState } from "./onboarding-context";
-import { IdCheckStatus } from '@customer-onboarding/data';
+import { IdCheckStatus, OnboardingState } from '@customer-onboarding/data';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 const TodoBox = styled.div`
     height: 54px;
@@ -58,15 +59,48 @@ const TodoBox = styled.div`
 `;
 
 export default function OnboardingDashboard() {
-    const { onboardingState } = useOnboardingState();
+    const { onboardingState, setOnboardingState } = useOnboardingState();
+    const [connection, setConnection] = useState<HubConnection>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const newConnection = new HubConnectionBuilder()
+            .withUrl(`https://localhost:5001/hubs/id-check-status?onboardingId=${onboardingState.onboardingId}`)
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
+    }, [onboardingState.onboardingId]);
+
+    useEffect(() => {
+        if (!connection) return;
+
+        connection.start()
+            .then(_ => {
+                connection.on('IdCheckStatusUpdateReceived',
+                    (statusUpdate: { idCheckWorkflowId: string, status: IdCheckStatus, idCheckIndex: number }) => {
+                        setOnboardingState((currentState: OnboardingState) => ({
+                            ...currentState,
+                            idCheckWorkflows: [
+                                ...currentState.idCheckWorkflows.filter(
+                                    f => f.idCheckWorkflowId !== statusUpdate.idCheckWorkflowId
+                                ),
+                                statusUpdate
+                            ].sort((a, b) => a.idCheckIndex - b.idCheckIndex)
+                        }));
+                    });
+            })
+            .catch(e => console.log('Connection failed: ', e));
+
+    }, [connection, setOnboardingState]);
+
     return (
         <div className='dashboard'>
             <p>Please complete the following tasks to open your account:</p>
             {
                 onboardingState.idCheckWorkflows.map((w, i) => (
                     <TodoBox key={w.idCheckWorkflowId} onClick={() => {
-                        navigate(`start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}`);
+                        navigate(`start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}/${w.idCheckIndex}`);
                     }}>
                         <span className="label">
                             {i === 0 ? "Your Id Check: " : "Your Partner's Id Check: "}

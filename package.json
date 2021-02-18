@@ -4,8 +4,7 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "start": "nx serve",
-    "start-apps": "concurrently \"nx serve onboarding --port 4200\" \"nx serve idcheck --port 4201\"",
+    "start": "concurrently \"nx serve onboarding --port 4200\" \"nx serve idcheck --port 4201\"",
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
