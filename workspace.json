@@ -169,14 +169,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": [
-              "apps/idcheck/tsconfig.app.json",
-              "apps/idcheck/tsconfig.spec.json",
-              "apps/idcheck/tsconfig.editor.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/idcheck/**/*"]
+            "lintFilePatterns": [
+              "apps/idcheck/src/**/*.ts",
+              "apps/idcheck/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -208,10 +206,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "tsConfig": ["apps/idcheck-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/idcheck-e2e/**/*"]
+            "lintFilePatterns": ["apps/idcheck-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -256,14 +253,15 @@
     },
     "@nrwl/angular:application": {
       "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "e2eTestRunner": "cypress",
+      "linter": "eslint"
     },
     "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "linter": "eslint"
     },
     "@nrwl/angular:component": {
       "style": "scss"
     }
-  },
-  "defaultProject": "onboarding"
+  }
 }
