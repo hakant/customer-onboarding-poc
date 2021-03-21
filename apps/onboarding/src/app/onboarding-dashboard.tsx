@@ -65,17 +65,20 @@ export default function OnboardingDashboard() {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl(`https://localhost:5001/hubs/id-check-status?onboardingId=${onboardingState.onboardingId}`)
+            .withUrl(`https://localhost:5001/hubs/id-check-status`)
             .withAutomaticReconnect()
             .build();
 
         setConnection(newConnection);
-    }, [onboardingState.onboardingId]);
+    }, []);
 
     useEffect(() => {
         if (!connection) return;
 
         connection.start()
+            .then(async _ => {
+                await connection.invoke('JoinGroup', onboardingState.onboardingId)
+            })
             .then(_ => {
                 connection.on('IdCheckStatusUpdateReceived',
                     (statusUpdate: { idCheckWorkflowId: string, status: IdCheckStatus, idCheckIndex: number }) => {
@@ -92,7 +95,12 @@ export default function OnboardingDashboard() {
             })
             .catch(e => console.log('Connection failed: ', e));
 
-    }, [connection, setOnboardingState]);
+        return async function cleanup() {
+            await connection.invoke('LeaveGroup', onboardingState.onboardingId);
+            connection.stop();
+        };
+
+    }, [onboardingState.onboardingId, connection, setOnboardingState]);
 
     return (
         <div className='dashboard'>
