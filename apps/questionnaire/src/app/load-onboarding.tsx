@@ -14,7 +14,7 @@ export function LoadOnboarding() {
             intakeId: id
         }).then((response) => {
             const onboardingId = response.data;
-            navigate(`/onboarding/${onboardingId}`);
+            window.location.assign(`http://localhost:4201/onboarding/${onboardingId}`);
         }).catch((error) => {
             setError(error);
             setIsLoaded(true);

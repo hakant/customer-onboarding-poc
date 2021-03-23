@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
-import { OnboardingStateProvider } from './onboarding-context';
-import OnboardingDashboard from "./onboarding-dashboard";
-import StartIdCheck from './start-id-check';
+import LoadOnboarding from './load-onboarding';
+import Question from "./question";
+import QuestionnaireContainer from "./questionnaire-container";
+import { QuestionnaireStateProvider } from "./questionnaire-context";
+import Welcome from './welcome';
 
 
 const StyledHost = styled.div`
@@ -48,14 +50,19 @@ export default function App() {
       element: <Host />,
       children: [
         {
-          path: 'onboarding/:id',
+          path: '',
+          element: <Welcome />,
+          children: []
+        },
+        {
+          path: 'questionnaire/:id',
           element:
-            <OnboardingStateProvider>
-              <Outlet />
-            </OnboardingStateProvider>,
+            <QuestionnaireStateProvider>
+              <QuestionnaireContainer />
+            </QuestionnaireStateProvider>,
           children: [
-            { path: '', element: <OnboardingDashboard /> },
-            { path: 'start-id-check/:onboardingId/:idCheckId/:idCheckIndex', element: <StartIdCheck /> },
+            { path: 'question/:id', element: <Question /> },
+            { path: 'load-onboarding', element: <LoadOnboarding /> }
           ]
         }
       ]

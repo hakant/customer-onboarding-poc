@@ -1,5 +1,37 @@
 {
   "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "defaultProject": "questionnaire",
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "style": "@emotion/styled",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "@emotion/styled"
+      },
+      "library": {
+        "style": "@emotion/styled",
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress",
+      "linter": "eslint"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest",
+      "linter": "eslint"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
   "projects": {
     "onboarding": {
       "root": "apps/onboarding",
@@ -213,6 +245,106 @@
         }
       }
     },
+    "questionnaire": {
+      "root": "apps/questionnaire",
+      "sourceRoot": "apps/questionnaire/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/questionnaire",
+            "index": "apps/questionnaire/src/index.html",
+            "main": "apps/questionnaire/src/main.tsx",
+            "polyfills": "apps/questionnaire/src/polyfills.ts",
+            "tsConfig": "apps/questionnaire/tsconfig.app.json",
+            "assets": [
+              "apps/questionnaire/src/favicon.ico",
+              "apps/questionnaire/src/assets"
+            ],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/questionnaire/src/environments/environment.ts",
+                  "with": "apps/questionnaire/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "questionnaire:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "questionnaire:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/questionnaire/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/questionnaire"],
+          "options": {
+            "jestConfig": "apps/questionnaire/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "questionnaire-e2e": {
+      "root": "apps/questionnaire-e2e",
+      "sourceRoot": "apps/questionnaire-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/questionnaire-e2e/cypress.json",
+            "tsConfig": "apps/questionnaire-e2e/tsconfig.e2e.json",
+            "devServerTarget": "questionnaire:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "questionnaire:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/questionnaire-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
     "data": {
       "root": "libs/data",
       "sourceRoot": "libs/data/src",
@@ -233,35 +365,6 @@
           }
         }
       }
-    }
-  },
-  "cli": {},
-  "schematics": {
-    "@nrwl/react": {
-      "application": {
-        "style": "@emotion/styled",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "@emotion/styled"
-      },
-      "library": {
-        "style": "@emotion/styled",
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress",
-      "linter": "eslint"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest",
-      "linter": "eslint"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
     }
   }
 }

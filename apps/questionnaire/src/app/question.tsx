@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuestionnaireState } from "./questionnnaire-context";
+import { useQuestionnaireState } from "./questionnaire-context";
 import { getQuestion } from './services/questionnaire-service';
 
 const StyledQuestion = styled.div`

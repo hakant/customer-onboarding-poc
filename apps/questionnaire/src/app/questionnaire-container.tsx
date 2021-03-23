@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import React, { useEffect, useRef } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useQuestionnaireState } from "./questionnnaire-context";
+import { useQuestionnaireState } from "./questionnaire-context";
 import { getQuestion } from "./services/questionnaire-service";
 
 const StyledHost = styled.div`
