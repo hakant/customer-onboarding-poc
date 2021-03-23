@@ -70,7 +70,7 @@ export default function StartIdCheck() {
             </StyledQuestion>
             <StyledActions>
                 <button onClick={() => {
-                    navigate("../../../");
+                    navigate("../../../../");
                 }}>Previous</button>
                 <button disabled={!answer} onClick={() => {
                     if (answer === "stay") {
