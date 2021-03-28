@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import axios from "axios";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuestionnaireState } from "./questionnaire-context";
 import { getQuestion } from "./services/questionnaire-service";
@@ -27,11 +27,22 @@ export default function QuestionnaireContainer() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { questionnaireState, dispatch } = useQuestionnaireState();
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
     const { intakeId, currentQuestionId, currentAnswerCode } = questionnaireState.intake;
     const question = getQuestion(currentQuestionId, questionnaireState.questions);
     useEffect(() => {
         if (currentQuestionId === 'end') {
-            navigate(`load-onboarding`);
+            setIsLoaded(false);
+            axios.post(`/onboarding`, {
+                intakeId: id
+            }).then((response) => {
+                const onboardingId = response.data;
+                window.location.assign(`http://localhost:4201/onboarding/${onboardingId}`);
+            }).catch((error) => {
+                setError(error);
+                setIsLoaded(true);
+            });
             return;
         }
         if (location.pathname.indexOf('/question/') < 0) {
@@ -42,7 +53,17 @@ export default function QuestionnaireContainer() {
             navigate(`question/${currentQuestionId}`);
         }
         previousQuestionId.current = currentQuestionId;
-    }, [currentQuestionId, location.pathname, navigate]);
+        setIsLoaded(true);
+    }, [currentQuestionId, id, location.pathname, navigate]);
+
+    if (!isLoaded) {
+        return <div>Loading...</div>
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>
+    }
+
     return (
         <StyledHost>
             <Outlet />

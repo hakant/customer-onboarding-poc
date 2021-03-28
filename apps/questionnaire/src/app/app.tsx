@@ -61,8 +61,7 @@ export default function App() {
               <QuestionnaireContainer />
             </QuestionnaireStateProvider>,
           children: [
-            { path: 'question/:id', element: <Question /> },
-            { path: 'load-onboarding', element: <LoadOnboarding /> }
+            { path: 'question/:id', element: <Question /> }
           ]
         }
       ]
