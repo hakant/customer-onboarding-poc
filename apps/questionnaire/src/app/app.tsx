@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
-import LoadOnboarding from './load-onboarding';
 import Question from "./question";
 import QuestionnaireContainer from "./questionnaire-container";
 import { QuestionnaireStateProvider } from "./questionnaire-context";

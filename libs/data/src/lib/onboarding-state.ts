@@ -1,13 +1,14 @@
 export interface OnboardingState {
     onboardingId: string,
     intakeId: string,
-    idCheckWorkflows: IdCheckWorkflow[]
+    idCheckWorkflows: IdCheckWorkflow[],
+    contactPhoneNumber: string,
 }
 
 export interface IdCheckWorkflow {
     idCheckWorkflowId: string,
     status: IdCheckStatus,
-    idCheckIndex: number
+    idCheckIndex: number,
 }
 
 export enum IdCheckStatus {
@@ -16,5 +17,5 @@ export enum IdCheckStatus {
     IdCheckStarted = "IdCheckStarted",
     IdCheckTimedOut = "IdCheckTimedOut",
     IdCheckFailed = "IdCheckFailed",
-    IdCheckSuccessful = "IdCheckSuccessful"
+    IdCheckSuccessful = "IdCheckSuccessful",
 }

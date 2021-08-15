@@ -3,7 +3,9 @@ import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
 import { OnboardingStateProvider } from './onboarding-context';
 import OnboardingDashboard from "./onboarding-dashboard";
+import PhoneNumberQuestion from './phone-number-question';
 import StartIdCheck from './start-id-check';
+import Welcome from './welcome';
 
 
 const StyledHost = styled.div`
@@ -54,7 +56,9 @@ export default function App() {
               <Outlet />
             </OnboardingStateProvider>,
           children: [
-            { path: '', element: <OnboardingDashboard /> },
+            { path: '', element: <Welcome /> },
+            { path: 'mobile-phone', element: <PhoneNumberQuestion /> },
+            { path: 'overview', element: <OnboardingDashboard /> },
             { path: 'start-id-check/:onboardingId/:idCheckId/:idCheckIndex', element: <StartIdCheck /> },
           ]
         }

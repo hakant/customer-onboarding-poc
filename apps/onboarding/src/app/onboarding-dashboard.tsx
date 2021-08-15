@@ -108,7 +108,7 @@ export default function OnboardingDashboard() {
             {
                 onboardingState.idCheckWorkflows.map((w, i) => (
                     <TodoBox key={w.idCheckWorkflowId} onClick={() => {
-                        navigate(`start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}/${w.idCheckIndex}`);
+                        navigate(`../start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}/${w.idCheckIndex}`);
                     }}>
                         <span className="label">
                             {i === 0 ? "Your Id Check: " : "Your Partner's Id Check: "}
