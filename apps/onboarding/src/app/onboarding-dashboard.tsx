@@ -95,10 +95,12 @@ export default function OnboardingDashboard() {
             })
             .catch(e => console.log('Connection failed: ', e));
 
-        return async function cleanup() {
-            await connection.invoke('LeaveGroup', onboardingState.onboardingId);
-            connection.stop();
-        };
+
+        return function cleanup() {
+            connection
+                .invoke('LeaveGroup', onboardingState.onboardingId)
+                .then(connection.stop);
+        }
 
     }, [onboardingState.onboardingId, connection, setOnboardingState]);
 

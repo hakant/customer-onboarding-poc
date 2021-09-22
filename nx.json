@@ -18,45 +18,42 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
   "projects": {
-    "onboarding": {
+    "data": {
       "tags": []
-    },
-    "onboarding-e2e": {
-      "tags": [],
-      "implicitDependencies": [
-        "onboarding"
-      ]
     },
     "idcheck": {
       "tags": []
     },
     "idcheck-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "idcheck"
-      ]
+      "implicitDependencies": ["idcheck"]
+    },
+    "onboarding": {
+      "tags": []
+    },
+    "onboarding-e2e": {
+      "tags": [],
+      "implicitDependencies": ["onboarding"]
     },
     "questionnaire": {
       "tags": []
     },
     "questionnaire-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "questionnaire"
-      ]
-    },
-    "data": {
-      "tags": []
+      "implicitDependencies": ["questionnaire"]
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
