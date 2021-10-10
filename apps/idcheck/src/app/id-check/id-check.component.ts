@@ -29,7 +29,6 @@ export class IdCheckComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.httpClient.get(`https://localhost:5001/onboarding/${this.onboardingId}`)
       .subscribe((response: { onboardingWorkflow: OnboardingState }) => {
         this.currentEvent = response.onboardingWorkflow.idCheckWorkflows.find(

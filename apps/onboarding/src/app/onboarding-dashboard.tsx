@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOnboardingState } from "./onboarding-context";
 import { IdCheckStatus, OnboardingState } from '@customer-onboarding/data';
@@ -110,7 +110,11 @@ export default function OnboardingDashboard() {
             {
                 onboardingState.idCheckWorkflows.map((w, i) => (
                     <TodoBox key={w.idCheckWorkflowId} onClick={() => {
-                        navigate(`../start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}/${w.idCheckIndex}`);
+                        if (w.status !== IdCheckStatus.IdCheckSuccessful) {
+                            navigate(`../start-id-check/${onboardingState.onboardingId}/${w.idCheckWorkflowId}/${w.idCheckIndex}`);
+                        } else {
+                            navigate(`../personal-details/${onboardingState.onboardingId}/${w.idCheckIndex}`);
+                        }
                     }}>
                         <span className="label">
                             {i === 0 ? "Your Id Check: " : "Your Partner's Id Check: "}

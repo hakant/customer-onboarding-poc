@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import React from "react";
 import { Outlet, useRoutes } from 'react-router-dom';
 import { OnboardingStateProvider } from './onboarding-context';
 import OnboardingDashboard from "./onboarding-dashboard";
+import PersonalDetailsForm from './personal-details-form';
 import PhoneNumberQuestion from './phone-number-question';
 import StartIdCheck from './start-id-check';
 import Welcome from './welcome';
@@ -60,6 +60,7 @@ export default function App() {
             { path: 'mobile-phone', element: <PhoneNumberQuestion /> },
             { path: 'overview', element: <OnboardingDashboard /> },
             { path: 'start-id-check/:onboardingId/:idCheckId/:idCheckIndex', element: <StartIdCheck /> },
+            { path: 'personal-details/:onboardingId/:idCheckIndex', element: <PersonalDetailsForm /> },
           ]
         }
       ]

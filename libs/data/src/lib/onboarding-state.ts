@@ -3,6 +3,7 @@ export interface OnboardingState {
     intakeId: string,
     idCheckWorkflows: IdCheckWorkflow[],
     contactPhoneNumber: string,
+    personalDetails: PersonalDetails[]
 }
 
 export interface IdCheckWorkflow {
@@ -18,4 +19,10 @@ export enum IdCheckStatus {
     IdCheckTimedOut = "IdCheckTimedOut",
     IdCheckFailed = "IdCheckFailed",
     IdCheckSuccessful = "IdCheckSuccessful",
+}
+
+export interface PersonalDetails {
+    name: string;
+    surname: string;
+    socialSecurityNumber: string;
 }

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuestionnaireState } from "./questionnaire-context";
 import { getQuestion } from "./services/questionnaire-service";
