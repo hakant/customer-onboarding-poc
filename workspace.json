@@ -41,12 +41,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/data/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/data/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/data"],
+          "outputs": [
+            "coverage/libs/data"
+          ],
           "options": {
             "jestConfig": "libs/data/jest.config.js",
             "passWithNoTests": true
@@ -59,6 +63,11 @@
       "root": "apps/idcheck",
       "sourceRoot": "apps/idcheck/src",
       "prefix": "customer-onboarding",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -73,7 +82,9 @@
               "apps/idcheck/src/favicon.ico",
               "apps/idcheck/src/assets"
             ],
-            "styles": ["apps/idcheck/src/styles.scss"],
+            "styles": [
+              "apps/idcheck/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -94,13 +105,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ]
             }
@@ -134,7 +145,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/idcheck"],
+          "outputs": [
+            "coverage/apps/idcheck"
+          ],
           "options": {
             "jestConfig": "apps/idcheck/jest.config.js",
             "passWithNoTests": true
@@ -163,7 +176,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/idcheck-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/idcheck-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -182,7 +197,9 @@
             "main": "apps/onboarding/src/main.tsx",
             "polyfills": "apps/onboarding/src/polyfills.ts",
             "tsConfig": "apps/onboarding/tsconfig.app.json",
-            "assets": ["apps/onboarding/src/assets"],
+            "assets": [
+              "apps/onboarding/src/assets"
+            ],
             "styles": [],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
@@ -211,7 +228,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/web:dev-server",
@@ -227,7 +246,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/onboarding/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/onboarding/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
@@ -236,7 +257,9 @@
             "jestConfig": "apps/onboarding/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/onboarding"]
+          "outputs": [
+            "coverage/apps/onboarding"
+          ]
         }
       }
     },
@@ -261,7 +284,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/onboarding-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/onboarding-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -273,7 +298,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/questionnaire",
             "index": "apps/questionnaire/src/index.html",
@@ -327,12 +354,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/questionnaire/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/questionnaire/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/questionnaire"],
+          "outputs": [
+            "coverage/apps/questionnaire"
+          ],
           "options": {
             "jestConfig": "apps/questionnaire/jest.config.js",
             "passWithNoTests": true
@@ -361,7 +392,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/questionnaire-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/questionnaire-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
